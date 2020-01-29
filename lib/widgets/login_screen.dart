@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 15.0,
                 ),
-                Text(model.lastError ?? ""),
+                Text(model.error ?? ""),
               ],
             ),
           ),

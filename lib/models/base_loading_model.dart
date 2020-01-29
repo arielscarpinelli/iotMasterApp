@@ -7,8 +7,8 @@ class BaseLoadingModel<T> extends ChangeNotifier {
   bool _loading = false;
 
   bool get loading => _loading;
-  String get lastError => _lastError;
-  get data => _data;
+  String get error => _lastError;
+  T get data => _data;
 
   fetch(Future<T> toAwait) async {
     this._lastError = null;

@@ -19,7 +19,7 @@ class LoginModel extends BaseLoadingModel<AccessToken> {
 
   Future<AccessToken> _doLogin() async {
     var jwt = await api.login(_apiKey);
-    jwt.expiresIn += DateTime.now().millisecondsSinceEpoch;
+    jwt.expiresIn = DateTime.now().millisecondsSinceEpoch + (jwt.expiresIn * 1000);
     return jwt;
   }
 

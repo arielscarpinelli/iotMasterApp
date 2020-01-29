@@ -31,6 +31,7 @@ class TraitType {
   String type;
   String actionTopic;
   String statusTopic;
+  String lastStatus;
 
   factory TraitType.fromJson(Map<String, dynamic> json) =>
       _$TraitTypeFromJson(json);
