@@ -21,6 +21,7 @@ abstract class BaseLoadingScreen<W extends StatefulWidget,
       appBar: AppBar(
         title: Text(getTitle(model)),
       ),
+      floatingActionButton: this.getFloatingActionButton(),
       body: model.loading
           ? Center(child: CircularProgressIndicator())
           : model.error != null ? renderError(model) : render(model),
@@ -55,5 +56,9 @@ abstract class BaseLoadingScreen<W extends StatefulWidget,
         )
       ],
     ));
+  }
+
+  Widget getFloatingActionButton() {
+    return null;
   }
 }

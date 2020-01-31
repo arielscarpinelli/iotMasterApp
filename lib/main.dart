@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'models/device_detail_model.dart';
 import 'models/device_list_model.dart';
 import 'models/login_model.dart';
+import 'models/add_device_model.dart';
 import 'widgets/login_screen.dart';
 
 void main() => runApp(MultiProvider(
@@ -16,6 +17,8 @@ void main() => runApp(MultiProvider(
             builder: (context) => DeviceListModel(GBridgeApi(), context)),
         ChangeNotifierProvider(
             builder: (context) => DeviceDetailModel(GBridgeApi(), context)),
+        ChangeNotifierProvider(
+            builder: (context) => AddDeviceModel()),
       ],
       child: MyApp(),
     ));

@@ -4,6 +4,7 @@ import 'package:gbridgeapp/models/device.dart';
 import 'package:gbridgeapp/models/device_list_model.dart';
 import 'package:provider/provider.dart';
 
+import 'add_device_screen.dart';
 import 'base_loading_screen.dart';
 import 'device_icon.dart';
 import 'device_status_screen.dart';
@@ -13,7 +14,8 @@ class DeviceListScreen extends StatefulWidget {
   _DeviceListScreen createState() => _DeviceListScreen();
 }
 
-class _DeviceListScreen extends BaseLoadingScreen<DeviceListScreen, DeviceListModel> {
+class _DeviceListScreen
+    extends BaseLoadingScreen<DeviceListScreen, DeviceListModel> {
   final TextStyle _biggerFont = const TextStyle(fontSize: 18);
 
   @override
@@ -50,8 +52,18 @@ class _DeviceListScreen extends BaseLoadingScreen<DeviceListScreen, DeviceListMo
   }
 
   onTap(Device device) {
-    return Navigator.push(
-        context, new MaterialPageRoute(builder: (ctx) => DeviceStatusScreen(device)));
+    return Navigator.push(context,
+        new MaterialPageRoute(builder: (ctx) => DeviceStatusScreen(device)));
   }
 
+  onAddNew() {
+    return Navigator.push(
+        context, new MaterialPageRoute(builder: (ctx) => AddDeviceScreen()));
+  }
+
+  @override
+  Widget getFloatingActionButton() {
+    return FloatingActionButton(
+        child: Icon(Icons.add), onPressed: () => this.onAddNew());
+  }
 }
