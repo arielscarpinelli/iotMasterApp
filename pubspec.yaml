@@ -1,5 +1,5 @@
-name: gbridgeapp
-description: Gbridge.io management app
+name: iotmasterapp
+description: iotMaster API client for configuring ESP8266 devices to work with iotMaster and Google Home
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43

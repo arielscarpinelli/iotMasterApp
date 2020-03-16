@@ -2,6 +2,8 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
+  - connectivity_macos (0.0.1):
+    - Flutter
   - esptouch_flutter (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -15,6 +17,7 @@ PODS:
 
 DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - connectivity_macos (from `.symlinks/plugins/connectivity_macos/ios`)
   - esptouch_flutter (from `.symlinks/plugins/esptouch_flutter/ios`)
   - Flutter (from `Flutter`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -28,6 +31,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
+  connectivity_macos:
+    :path: ".symlinks/plugins/connectivity_macos/ios"
   esptouch_flutter:
     :path: ".symlinks/plugins/esptouch_flutter/ios"
   Flutter:
@@ -41,6 +46,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   connectivity: 6e94255659cc86dcbef1d452ad3e0491bb1b3e75
+  connectivity_macos: e2e9731b6b22dda39eb1b128f6969d574460e191
   esptouch_flutter: e73da8791abdc4aa4a24ccda75f9505e1aa05474
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96

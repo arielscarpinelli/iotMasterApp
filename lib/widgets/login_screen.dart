@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gbridgeapp/models/login_model.dart';
+import 'package:iotmasterapp/models/login_model.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {

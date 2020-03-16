@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gbridgeapp/models/device.dart';
+import 'package:iotmasterapp/models/device.dart';
 
 class DeviceIcon extends StatelessWidget {
 

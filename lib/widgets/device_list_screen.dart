@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gbridgeapp/models/device.dart';
-import 'package:gbridgeapp/models/device_list_model.dart';
+import 'package:iotmasterapp/models/device.dart';
+import 'package:iotmasterapp/models/device_list_model.dart';
 import 'package:provider/provider.dart';
 
 import 'add_device_screen.dart';

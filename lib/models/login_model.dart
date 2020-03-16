@@ -1,15 +1,15 @@
-import 'package:gbridgeapp/service/gbridge_api.dart';
+import 'package:iotmasterapp/service/iotmaster_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'access_token.dart';
 import 'base_loading_model.dart';
 
 class LoginModel extends BaseLoadingModel<AccessToken> {
-  GBridgeApi api;
+  IotMasterApi api;
 
   String _apiKey;
 
-  LoginModel(GBridgeApi api) {
+  LoginModel(IotMasterApi api) {
     this.api = api;
   }
 

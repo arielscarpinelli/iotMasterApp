@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gbridgeapp/models/add_device_model.dart';
+import 'package:iotmasterapp/models/add_device_model.dart';
 import 'package:provider/provider.dart';
 
 import 'base_loading_screen.dart';

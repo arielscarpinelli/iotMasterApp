@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:gbridgeapp/models/access_token.dart';
-import 'package:gbridgeapp/models/device.dart';
+import 'package:iotmasterapp/models/access_token.dart';
+import 'package:iotmasterapp/models/device.dart';
 import 'package:http/http.dart' as http;
 
-class GBridgeApi {
+class IotMasterApi {
   static String host = "https://gbridge.kappelt.net/api/v2/";
 
   // "http://localhost:8081/api/v2/";

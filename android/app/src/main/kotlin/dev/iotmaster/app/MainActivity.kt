@@ -1,4 +1,4 @@
-package io.gbridge.app.gbridgeapp
+package dev.iotmaster.app
 
 import android.os.Bundle
 
