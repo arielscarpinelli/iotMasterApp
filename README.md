@@ -1,6 +1,6 @@
-# gbridgeapp
+# iotMasterApp
 
-Gbridge.io management app
+iotMaster API client for configuring ESP8266 devices to work with iotMaster and Google Home
 
 ## Getting Started
 
