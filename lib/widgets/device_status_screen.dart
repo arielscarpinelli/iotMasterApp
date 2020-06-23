@@ -32,12 +32,12 @@ class _DeviceStatusScreen extends BaseLoadingScreen<DeviceStatusScreen, DeviceDe
     );
   }
 
-  Widget _buildRow(TraitType trait) {
+  Widget _buildRow(String trait) {
     return Card(
         child: InkWell(
       child: ListTile(
-        title: Text(trait.type),
-        subtitle: trait.lastStatus != null ? Text(trait.lastStatus) : null,
+        title: Text(trait),
+        //subtitle: trait.lastStatus != null ? Text(trait.lastStatus) : null,
       ),
     ));
   }
@@ -66,6 +66,6 @@ class _DeviceStatusScreen extends BaseLoadingScreen<DeviceStatusScreen, DeviceDe
   @override
   void load() {
     Provider.of<DeviceDetailModel>(this.context, listen: false)
-        .fetchDevice(widget.device.id);
+        .fetchDevice(widget.device.deviceid);
   }
 }

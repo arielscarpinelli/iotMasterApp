@@ -1,0 +1,5 @@
+#define WLAN_SSID       "Pau y Ari"
+#define WLAN_PASS       "1135341623"
+//#define DEVICE_ID       "62ea9a1f-04cd-47e2-a93f-b6f2e5fe84f6"
+#define DEVICE_ID       "7d745048-d4c0-44d2-8e0a-084667314072"
+#define API_KEY         "c177b39b-1f30-4e63-a4c1-8665fd10cf12"

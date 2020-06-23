@@ -3,70 +3,52 @@ import 'package:json_annotation/json_annotation.dart';
 part 'device.g.dart';
 
 enum DeviceType {
-  Light,
-  Outlet,
-  Switch,
-  Scene,
-  Thermostat,
-  Fan,
-  AC,
-  Purifier,
-  Sprinkler,
-  Door,
-  Blinds,
-  Shutter,
-  Dishwasher,
-  Dryer,
-  Vacuum,
-  Washer,
-  Camera
+  LIGHT,
+  SWITCH,
+  THERMOSTAT,
+  GENERIC
 }
 
-@JsonSerializable()
-class TraitType {
-  TraitType();
-
-  bool requiresActionTopic;
-  bool requiresStatusTopic;
-  String type;
-  String actionTopic;
-  String statusTopic;
-  String lastStatus;
-
-  factory TraitType.fromJson(Map<String, dynamic> json) =>
-      _$TraitTypeFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TraitTypeToJson(this);
+DeviceType fromType(String type) {
+  switch(type) {
+    case "LIGHT":
+      return DeviceType.LIGHT;
+    case "SWITCH":
+      return DeviceType.SWITCH;
+    case "THERMOSTAT":
+      return DeviceType.THERMOSTAT;
+    default:
+      return DeviceType.GENERIC;
+  }
 }
 
 @JsonSerializable()
 class Device {
   Device();
 
-  // Unique device id, assigned by gBridge
-  int id;
+  String deviceid;
 
-  // Human readable name, used for voice commands
+  String apikey;
+
   String name;
 
+  String group;
+
+  @JsonKey(unknownEnumValue: DeviceType.GENERIC)
   DeviceType type;
 
-  //Traits/ Features the device supports. Choose at least one.
-  List<TraitType> traits;
+  DateTime createdAt;
 
-  // Two-step confirmation or PIN-Code verification. null means no further confirmation is used.
-  String twofa;
+  bool online;
 
-  // PIN code for two step authorization. Necessary if twofa is set to pin. The PIN code is usually a 4 to 8 digit number.
-  String twofaPin;
+  Map<String, dynamic> params;
 
-  factory Device.fromJson(Map<String, dynamic> json) {
-    Device device = _$DeviceFromJson(json);
-    if (json.containsKey('device_id')) {
-      device.id = json['device_id'] as int;
-    }
-    return device;
-  }
+  Map<String, dynamic> attributes;
+
+  List<String> traits;
+
+
+  factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
 
   Map<String, dynamic> toJson() => _$DeviceToJson(this);
 }

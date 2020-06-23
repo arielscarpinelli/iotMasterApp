@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final login = TextEditingController();
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +24,28 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: login,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Api key", //"Email",
+          hintText: "Email",
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-//    final passwordField = TextField(
-//      obscureText: true,
-//      style: style,
-//      decoration: InputDecoration(
-//          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-//          hintText: "Password",
-//          border:
-//              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-//    );
+    final passwordField = TextField(
+      obscureText: true,
+      style: style,
+      controller: password,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Password",
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+    );
 
     final loginButton = ButtonTheme(
         minWidth: MediaQuery.of(context).size.width,
         child: RaisedButton(
       color: Theme.of(context).accentColor,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => model.login(login.value.text, "ignorePassword"),
+      onPressed: () => model.login(login.value.text, password.value.text),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
@@ -74,8 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
 //                ),
                       SizedBox(height: 45.0),
                       emailField,
-//                SizedBox(height: 25.0),
-//                passwordField,
+                      SizedBox(height: 25.0),
+                      passwordField,
                       SizedBox(
                         height: 35.0,
                       ),

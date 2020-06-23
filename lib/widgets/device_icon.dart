@@ -18,9 +18,9 @@ class DeviceIcon extends StatelessWidget {
 IconData getIcon(DeviceType deviceType) {
 
   switch (deviceType) {
-    case DeviceType.Light:
+    case DeviceType.LIGHT:
       return Icons.lightbulb_outline;
-    case DeviceType.Thermostat:
+    case DeviceType.SWITCH:
       return Icons.wb_sunny;
     default:
       return Icons.widgets;

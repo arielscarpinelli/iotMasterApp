@@ -7,21 +7,22 @@ import 'base_loading_model.dart';
 class LoginModel extends BaseLoadingModel<AccessToken> {
   IotMasterApi api;
 
-  String _apiKey;
+  String _user;
+  String _password;
 
   LoginModel(IotMasterApi api) {
     this.api = api;
   }
 
-  login(String user, String ignoredPassword) async {
-    this._apiKey = user;
+  login(String user, String password) async {
+    this._user = user;
+    this._password = password;
     fetch(_doLogin());
   }
 
   Future<AccessToken> _doLogin() async {
-    var jwt = await api.login(_apiKey);
-    jwt.expiresIn = DateTime.now().millisecondsSinceEpoch + (jwt.expiresIn * 1000);
-    _saveApiKey();
+    var jwt = await api.login(_user, _password);
+    _saveRefreshToken();
     return jwt;
   }
 
@@ -33,14 +34,18 @@ class LoginModel extends BaseLoadingModel<AccessToken> {
   // TODO: insecure
   tryRecoverLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String apiKey = prefs.get("apiKey");
-    if (apiKey != null && apiKey.isNotEmpty) {
-      return login(apiKey, null);
+    String user = prefs.get("user");
+    String password = prefs.get("password");
+    if (user != null && user.isNotEmpty && password != null && password.isNotEmpty) {
+      return login(user, password);
     }
   }
 
-  _saveApiKey() async {
+  _saveRefreshToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString("apiKey", _apiKey);
+    return Future.wait([
+        prefs.setString("user", _user),
+        prefs.setString("password", _password)
+    ]);
   }
 }

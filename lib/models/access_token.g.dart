@@ -19,5 +19,5 @@ Map<String, dynamic> _$AccessTokenToJson(AccessToken instance) =>
       'access_token': instance.accessToken,
       'token_type': instance.tokenType,
       'expires_in': instance.expiresIn,
-      'privilege': instance.privilege
+      'privilege': instance.privilege,
     };

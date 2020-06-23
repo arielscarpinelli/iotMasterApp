@@ -15,7 +15,7 @@ class DeviceDetailModel extends BaseLoadingModel<Device> {
     this.context = context;
   }
 
-  fetchDevice(int deviceId) async {
+  fetchDevice(String deviceId) async {
     fetch(api.getDevice(
         Provider.of<LoginModel>(this.context, listen: false).data, deviceId));
   }
