@@ -1,45 +1,33 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iotmasterapp/models/device.dart';
-import 'package:iotmasterapp/models/device_detail_model.dart';
+import 'package:iotmasterapp/models/device_list_model.dart';
 import 'package:provider/provider.dart';
 
 import 'base_loading_screen.dart';
 import 'device_icon.dart';
 
 class DeviceStatusScreen extends StatefulWidget {
-  DeviceStatusScreen(this.device);
+  DeviceStatusScreen(this.deviceId);
 
-  final Device device;
+  final String deviceId;
 
   @override
   _DeviceStatusScreen createState() => _DeviceStatusScreen();
 }
 
-class _DeviceStatusScreen extends BaseLoadingScreen<DeviceStatusScreen, DeviceDetailModel> {
-
+class _DeviceStatusScreen
+    extends BaseLoadingScreen<DeviceStatusScreen, DeviceListModel> {
   final TextStyle _biggerFont = const TextStyle(fontSize: 18);
 
-  Widget render(DeviceDetailModel model) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: (model.data?.traits?.length ?? 0) + 1,
-      itemBuilder: (BuildContext _context, int i) {
-        return i == 0
-            ? _buildHeader(model.data)
-            : _buildRow(model.data.traits[i - 1]);
-      },
-    );
-  }
-
-  Widget _buildRow(String trait) {
-    return Card(
-        child: InkWell(
-      child: ListTile(
-        title: Text(trait),
-        //subtitle: trait.lastStatus != null ? Text(trait.lastStatus) : null,
-      ),
-    ));
+  Widget render(DeviceListModel model) {
+    Device device = model.findById(widget.deviceId);
+    return new ListView(
+        padding: const EdgeInsets.all(16),
+        children: !device.online
+            ? [_buildHeader(device), offline()]
+            : [_buildHeader(device), onOff(model, device)]
+                .where((_) => _ != null)
+                .toList());
   }
 
   Widget _buildHeader(Device device) {
@@ -48,24 +36,50 @@ class _DeviceStatusScreen extends BaseLoadingScreen<DeviceStatusScreen, DeviceDe
       child: ListTile(
         leading: DeviceIcon(device.type),
         title: Text(device.name, style: _biggerFont),
-        subtitle: device.type != null ? Text(describeEnum(device.type)) : null,
+        subtitle: Text(device.friendlyType),
       ),
     ));
   }
 
   @override
-  void initState() {
-    super.initState();
+  String getTitle(DeviceListModel model) {
+    return model.findById(widget.deviceId).name;
   }
 
   @override
-  String getTitle(DeviceDetailModel model) {
-    return model.data != null ? model.data.name : widget.device.name;
+  void load() {}
+
+  Widget onOff(DeviceListModel model, Device device) {
+    return device.canTurnOn
+        ? SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Card(
+                child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      heightFactor: 0.5,
+                    child: device.isOn
+                        ? new FlatButton(
+                            onPressed: () =>
+                                model.switchOn(device.deviceid, false),
+                            child: Text("On"),
+                            color: Theme.of(context).primaryColor,
+                            textTheme: ButtonTextTheme.primary)
+                        : new OutlineButton(
+                            onPressed: () =>
+                                model.switchOn(device.deviceid, true),
+                            child: Text("Off"))))))
+        : null;
   }
 
-  @override
-  void load() {
-    Provider.of<DeviceDetailModel>(this.context, listen: false)
-        .fetchDevice(widget.device.deviceid);
+  Widget offline() {
+    return Card(
+        child: InkWell(
+      child: ListTile(
+        leading: Icon(Icons.error_outline),
+        title: Text("Offline"),
+      ),
+    ));
   }
 }

@@ -1,39 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'device.dart';
+part of 'protocol_message.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Device _$DeviceFromJson(Map<String, dynamic> json) {
-  return Device()
-    ..deviceid = json['deviceid'] as String
+ProtocolMessage _$ProtocolMessageFromJson(Map<String, dynamic> json) {
+  return ProtocolMessage()
+    ..sequence = json['sequence'] as String
+    ..action = _$enumDecodeNullable(_$ActionEnumMap, json['action'])
     ..apikey = json['apikey'] as String
-    ..name = json['name'] as String
-    ..group = json['group'] as String
-    ..type = _$enumDecodeNullable(_$DeviceTypeEnumMap, json['type'],
-        unknownValue: DeviceType.GENERIC)
-    ..createdAt = json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String)
-    ..online = json['online'] as bool
+    ..deviceid = json['deviceid'] as String
     ..params = json['params'] as Map<String, dynamic>
-    ..attributes = json['attributes'] as Map<String, dynamic>
-    ..traits = (json['traits'] as List)?.map((e) => e as String)?.toSet();
+    ..error = json['error'] as int
+    ..reason = json['reason'] as String;
 }
 
-Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
-      'deviceid': instance.deviceid,
+Map<String, dynamic> _$ProtocolMessageToJson(ProtocolMessage instance) =>
+    <String, dynamic>{
+      'sequence': instance.sequence,
+      'action': _$ActionEnumMap[instance.action],
       'apikey': instance.apikey,
-      'name': instance.name,
-      'group': instance.group,
-      'type': _$DeviceTypeEnumMap[instance.type],
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'online': instance.online,
+      'deviceid': instance.deviceid,
       'params': instance.params,
-      'attributes': instance.attributes,
-      'traits': instance.traits?.toList(),
+      'error': instance.error,
+      'reason': instance.reason,
     };
 
 T _$enumDecode<T>(
@@ -68,9 +60,9 @@ T _$enumDecodeNullable<T>(
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$DeviceTypeEnumMap = {
-  DeviceType.LIGHT: 'LIGHT',
-  DeviceType.SWITCH: 'SWITCH',
-  DeviceType.THERMOSTAT: 'THERMOSTAT',
-  DeviceType.GENERIC: 'GENERIC',
+const _$ActionEnumMap = {
+  Action.update: 'update',
+  Action.query: 'query',
+  Action.register: 'register',
+  Action.date: 'date',
 };

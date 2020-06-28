@@ -35,21 +35,18 @@ abstract class BaseLoadingScreen<W extends StatefulWidget,
   }
 
   Widget renderError(T model) {
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(model.error.toString()),
-        MaterialButton(
-          onPressed: () => load(),
-          child: Text(
-            "Retry",
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    ));
+    renderAnError(model.error.toString(), () => load());
+    return render(null);
+  }
+
+  void renderAnError(String message, void Function() retry) {
+    final snackBar = SnackBar(
+        content: Text(message),
+        action: retry != null
+            ? SnackBarAction(label: 'Retry', onPressed: retry)
+            : null);
+    // Find the Scaffold in the widget tree and use it to show a SnackBar.
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Widget getFloatingActionButton() {

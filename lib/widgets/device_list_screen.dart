@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iotmasterapp/models/device.dart';
 import 'package:iotmasterapp/models/device_list_model.dart';
@@ -46,14 +45,14 @@ class _DeviceListScreen
       child: ListTile(
         leading: DeviceIcon(device.type),
         title: Text(device.name, style: _biggerFont),
-        subtitle: device.type != null ? Text(describeEnum(device.type)) : null,
+        subtitle: Text(device.friendlyType),
       ),
     ));
   }
 
   onTap(Device device) {
     return Navigator.push(context,
-        new MaterialPageRoute(builder: (ctx) => DeviceStatusScreen(device)));
+        new MaterialPageRoute(builder: (ctx) => DeviceStatusScreen(device.deviceid)));
   }
 
   onAddNew() {

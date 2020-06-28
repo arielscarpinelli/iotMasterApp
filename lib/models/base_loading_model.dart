@@ -9,14 +9,16 @@ class BaseLoadingModel<T> extends ChangeNotifier {
   bool get loading => _loading;
   String get error => _lastError;
   T get data => _data;
+  @protected
+  set data(T d) => _data = d;
 
   fetch(Future<T> toAwait) async {
     this._lastError = null;
     this._loading = true;
-    this._data = null;
+    data = null;
     notifyListeners();
     try {
-      this._data = await toAwait;
+      data = await toAwait;
     } catch (e) {
       this._lastError = e.toString();
     } finally {
@@ -24,6 +26,5 @@ class BaseLoadingModel<T> extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
 }
