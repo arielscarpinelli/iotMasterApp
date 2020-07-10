@@ -14,6 +14,7 @@ abstract class BaseLoadingScreen<W extends StatefulWidget,
       // Add from here...
       appBar: AppBar(
         title: Text(getTitle(model)),
+        actions: getAppBarActions(model),
       ),
       floatingActionButton: this.getFloatingActionButton(),
       body: model.loading
@@ -50,6 +51,10 @@ abstract class BaseLoadingScreen<W extends StatefulWidget,
   }
 
   Widget getFloatingActionButton() {
+    return null;
+  }
+
+  List<Widget> getAppBarActions(T model) {
     return null;
   }
 }

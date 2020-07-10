@@ -8,6 +8,7 @@ enum DeviceType {
   LIGHT,
   SWITCH,
   THERMOSTAT,
+  DIFF_TEMPERATURE_CONTROLLER,
   GENERIC
 }
 
@@ -57,7 +58,18 @@ class Device {
     return switchableDevicesTypes.contains(type) || traits.contains(KnownTraits.OnOff.toString());
   }
 
-  factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
+  bool get canBeConfigured {
+    return DeviceType.DIFF_TEMPERATURE_CONTROLLER == type;
+  }
+
+  factory Device.fromJson(Map<String, dynamic> json) {
+    var d = _$DeviceFromJson(json);
+    if (d.type == DeviceType.THERMOSTAT) {
+      d.online = true;
+      d.type = DeviceType.DIFF_TEMPERATURE_CONTROLLER;
+    }
+    return d;
+  }
 
   Map<String, dynamic> toJson() => _$DeviceToJson(this);
 
