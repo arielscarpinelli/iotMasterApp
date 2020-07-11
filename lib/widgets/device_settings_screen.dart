@@ -6,6 +6,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'base_loading_screen.dart';
 import 'device_icon.dart';
+import 'number_input.dart';
 
 class DeviceSettingsScreen extends StatefulWidget {
   DeviceSettingsScreen(this.deviceId);
@@ -24,9 +25,8 @@ class _DeviceSettingsScreen
     Device device = model.findById(widget.deviceId);
     return new ListView(
         padding: const EdgeInsets.all(16),
-        children: [
-          tempControllerHeader(model, device)
-        ].where((_) => _ != null).toList());
+        children:
+            [tempControllerSettings(model, device)].expand((i) => i).toList());
   }
 
   @override
@@ -37,28 +37,83 @@ class _DeviceSettingsScreen
   @override
   void load() {}
 
-  Widget tempControllerHeader(DeviceListModel model, Device device) {
-    return device.type == DeviceType.THERMOSTAT
-        ? //DeviceType.DIFF_TEMPERATURE_CONTROLLER ?
-    Card(
-        child: Column(
-          children: <Widget>[
-            ListTile(
-                leading: Icon(MdiIcons.coolantTemperature),
-                title: Text("26.5ºC",
-                    style: Theme.of(context).textTheme.headline2),
-                subtitle: Text("Water temperature")),
-            ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text("32.5ºC"),
-                subtitle: Text("Collector temperature")),
-            ListTile(
-                leading: Icon(MdiIcons.engineOutline),
-                title: Text("Running"),
-                subtitle: Text("Pump status")),
-          ],
-        ))
-        : null;
+  List<Widget> tempControllerSettings(DeviceListModel model, Device device) {
+    return device.type != DeviceType.DIFF_TEMPERATURE_CONTROLLER
+        ? []
+        : [
+            Card(
+                child: SwitchListTile(
+                    value: device.enabled,
+                    onChanged: (value) {},
+                    title: Text("Enabled"))),
+            Padding(
+              padding: EdgeInsets.only(top: 20, left: 10),
+              child: Text("Temperature range",
+                  style: Theme.of(context).textTheme.headline6),
+            ),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 100,
+                    incDecFactor: 0.5,
+                    isInt: false,
+                    subtitle: Text("Desired Temperature"))),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 100,
+                    incDecFactor: 0.5,
+                    isInt: false,
+                    subtitle: Text("Lower Temperature Threshold"))),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 100,
+                    incDecFactor: 0.5,
+                    isInt: false,
+                    subtitle: Text("Upper Temperature Threshold"))),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 100,
+                    incDecFactor: 0.5,
+                    isInt: false,
+                    subtitle: Text("Min Temperature"))),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 100,
+                    incDecFactor: 0.5,
+                    isInt: false,
+                    subtitle: Text("Max Temperature"))),
+            Padding(
+              padding: EdgeInsets.only(top: 20, left: 10),
+              child: Text("Cleaning",
+                  style: Theme.of(context).textTheme.headline6),
+            ),
+            Card(
+              child: InkWell(
+                child: ListTile(
+                    title: Text("12:33"),
+                    subtitle: Text("Cleaning Start Hour"),
+                    trailing: Icon(Icons.arrow_drop_down)),
+                onTap: () {
+                  showTimePicker(context: context, initialTime: TimeOfDay.now());
+                },
+              ),
+            ),
+            Card(
+                child: NumberInputWithIncrementDecrement(
+                    controller: TextEditingController(),
+                    min: 0,
+                    max: 60,
+                    subtitle: Text("Cleaning Duration (minutes)"))),
+          ];
   }
 
 /*
@@ -68,6 +123,7 @@ class _DeviceSettingsScreen
   doc["currentTime"] = time(nullptr);
   doc["wsConnected"] = conn.isConnected();
   doc["connectionUpdatedAt"] = conn.getConnectionUpdatedAt();
+
   doc["enabled"] = persistentState.enabled;
   doc["desiredTemperature"] = persistentState.desiredTemperature;
   doc["upperTemperatureThreshold"] = persistentState.upperTemperatureThreshold;
@@ -78,6 +134,9 @@ class _DeviceSettingsScreen
   doc["cleaningStartHour"] = persistentState.cleaningStartHour;
   doc["cleaningStartMinute"] = persistentState.cleaningStartMinute;
   doc["cleaningDurationMinutes"] = persistentState.cleaningDurationMinutes;
+
+  doc["timezoneOffsetSeconds"] = persistentState.timezoneOffsetSeconds;
+
   doc["heatSourceTemperature"] = transientState.heatSourceTemperature;
   doc["heatSourceFailureCount"] = transientState.heatSourceFailureCount;
   doc["heatSourceAverageTemperature"] = transientState.heatSourceAverageTemperatureSum /  transientState.heatSourceAverageTemperatureCount;

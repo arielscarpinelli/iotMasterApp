@@ -69,13 +69,23 @@ class _DeviceStatusScreen
                             ? new FlatButton(
                                 onPressed: () =>
                                     model.switchOn(device.deviceid, false),
-                                child: Text("On"),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(MdiIcons.power),
+                                      Text("On")
+                                    ]),
                                 color: Theme.of(context).primaryColor,
                                 textTheme: ButtonTextTheme.primary)
                             : new OutlineButton(
                                 onPressed: () =>
                                     model.switchOn(device.deviceid, true),
-                                child: Text("Off"))))))
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(MdiIcons.power),
+                                      Text("Off")
+                                    ]))))))
         : null;
   }
 
@@ -92,23 +102,26 @@ class _DeviceStatusScreen
   Widget tempControllerHeader(DeviceListModel model, Device device) {
     return device.type == DeviceType.DIFF_TEMPERATURE_CONTROLLER
         ? Card(
-            child: Column(
-            children: <Widget>[
-              ListTile(
-                  leading: Icon(MdiIcons.coolantTemperature),
-                  title: Text("26.5ºC",
-                      style: Theme.of(context).textTheme.headline2),
-                  subtitle: Text("Water temperature")),
-              ListTile(
-                  leading: Icon(Icons.wb_sunny),
-                  title: Text("32.5ºC"),
-                  subtitle: Text("Collector temperature")),
-              ListTile(
-                  leading: Icon(MdiIcons.engineOutline),
-                  title: Text("Running"),
-                  subtitle: Text("Pump status")),
-            ],
-          ))
+            child: device.enabled
+                ? Column(
+                    children: <Widget>[
+                      ListTile(
+                          leading: Icon(MdiIcons.coolantTemperature),
+                          title: Text("26.5ºC",
+                              style: Theme.of(context).textTheme.headline2),
+                          subtitle: Text("Water temperature")),
+                      ListTile(
+                          leading: Icon(Icons.wb_sunny),
+                          title: Text("32.5ºC"),
+                          subtitle: Text("Collector temperature")),
+                      ListTile(
+                          leading: Icon(MdiIcons.engineOutline),
+                          title: Text("Running"),
+                          subtitle: Text("Pump status")),
+                    ],
+                  )
+                : ListTile(
+                    leading: Icon(MdiIcons.power), title: Text("Disabled")))
         : null;
   }
 
@@ -120,19 +133,33 @@ class _DeviceStatusScreen
   @override
   List<Widget> getAppBarActions(DeviceListModel model) {
     Device device = model.findById(widget.deviceId);
-    return <Widget>[
+
+    var options = [
       device.canBeConfigured
-          ? IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                return Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (ctx) =>
-                            DeviceSettingsScreen(widget.deviceId)));
-              },
-            )
+          ? new PopupMenuItem(
+              value: () => Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (ctx) => DeviceSettingsScreen(widget.deviceId))),
+              child: Row(children: [
+                Icon(Icons.settings,
+                    color: Theme.of(context).textTheme.subtitle1.color),
+                Text(" Settings")
+              ]))
           : null
     ].where((_) => _ != null).toList();
+
+    return options.isEmpty
+        ? []
+        : [
+            PopupMenuButton(
+                onSelected: (a) {
+                  a();
+                },
+                itemBuilder: (BuildContext context) {
+                  return options;
+                },
+                icon: Icon(Icons.settings))
+          ];
   }
 }

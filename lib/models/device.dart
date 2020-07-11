@@ -62,6 +62,10 @@ class Device {
     return DeviceType.DIFF_TEMPERATURE_CONTROLLER == type;
   }
 
+  bool get enabled {
+    return true; // TODO
+  }
+
   factory Device.fromJson(Map<String, dynamic> json) {
     var d = _$DeviceFromJson(json);
     if (d.type == DeviceType.THERMOSTAT) {
